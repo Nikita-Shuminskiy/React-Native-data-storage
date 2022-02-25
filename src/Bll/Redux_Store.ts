@@ -1,8 +1,10 @@
 import { applyMiddleware, combineReducers, createStore, Dispatch } from "redux";
 import ThunkMiddleware from "redux-thunk";
-import { addPost, UserReducer } from "./ProfileReducer";
+import { setIsFetching, setUsers, UserReducer } from "./ProfileReducer";
 
-export type ActionsTypes = ReturnType<typeof addPost>;
+export type ActionsTypes =
+  | ReturnType<typeof setUsers>
+  | ReturnType<typeof setIsFetching>;
 
 export type AppStateType = ReturnType<typeof rootReducer>;
 export type AppDispatchType = Dispatch<ActionsTypes>;

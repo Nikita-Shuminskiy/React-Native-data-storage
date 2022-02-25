@@ -9,6 +9,12 @@ const NavBar = ({ navigation }: any) => {
       >
         Link to TodoList
       </Text>
+      <Text
+        onPress={() => navigation.navigate("Users")}
+        style={styles.container}
+      >
+        Link to Users
+      </Text>
     </View>
   );
 };

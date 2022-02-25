@@ -1,29 +1,51 @@
-import { profileAPI } from "Api/Api";
+import { ApiUserType, usersAPI } from "../Api/Api";
 import { Dispatch } from "redux";
 import { ActionsTypes } from "./Redux_Store";
 
-const initialState = {};
-export type InitialStateType = typeof initialState;
+type InitStateType = typeof initialState;
+const initialState = {
+  dataUsers: [] as ApiUserType[],
+  totalCount: 10,
+  currentPage: 1,
+  pageSize: 10,
+  isFetching: false,
+  disabledInProgressUser: [] as Array<number>,
+};
 
 export function UserReducer(
   state = initialState,
   action: ActionsTypes
-): InitialStateType {
+): InitStateType {
+  const copyState = { ...state };
   switch (action.type) {
+    case "USERS/SET-USERS":
+      return { ...state, dataUsers: action.users };
+    case "USER/FETCHING":
+      return { ...state, isFetching: action.isFetching };
     default:
       return state;
   }
 }
 
-export const addPost = (newMessage: string) =>
-  ({ type: "PROFILE/ADD-POST", newMessage } as const);
+export const setUsers = (users: Array<ApiUserType>) =>
+  ({ type: "USERS/SET-USERS", users } as const);
+export const setIsFetching = (isFetching: boolean) =>
+  ({ type: "USER/FETCHING", isFetching } as const);
 
-export const updateStatusThunk = (status: string) => {
+export const getUsersThunk = () => {
   return (dispatch: Dispatch) => {
-    profileAPI.updateStatus(status).then((response) => {
-      if (response.data.resultCode === 0) {
-        /*        dispatch(setProfileStatus(status));*/
-      }
-    });
+    usersAPI
+      .getUsers(1, 20)
+      .then((response) => {
+        if (!!response) {
+          dispatch(setUsers(response.items));
+        }
+      })
+      .catch((err) => {
+        alert("Error Users");
+      })
+      .finally(() => {
+        dispatch(setIsFetching(false));
+      });
   };
 };
