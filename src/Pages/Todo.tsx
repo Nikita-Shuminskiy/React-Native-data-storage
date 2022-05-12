@@ -10,6 +10,10 @@ const Todo = () => {
       <Text style={styles.header}>TODO</Text>
       <Text style={styles.header}>TODO</Text>
       <Text style={styles.header}>TODO</Text>
+      <Text style={styles.header}>TODO</Text>
+      <Text style={styles.header}>TODO</Text>
+      <Text style={styles.header}>TODO</Text>
+      <Text style={styles.header}>TODO</Text>
       <View style={styles.blockAddTodo}>
         <TextInput
           placeholder={"Useless Text"}
